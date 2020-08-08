@@ -1,18 +1,18 @@
 'use strict';
 
 class Car {
-  static getSpecs(car) {
-    console.log(
-      `maxSpeed: ${car._maxSpeed}, speed: ${car._speed}, isOn: ${car._isOn}, distance: ${car._distance}, price: ${car._price}`,
-    );
-  }
-
-  constructor(car) {
-    this._speed = 0;
-    this._price = car.price;
-    this._maxSpeed = car.maxSpeed;
-    this._isOn = false;
-    this._distance = 0;
+  constructor({
+    speed = 0,
+    price = 0,
+    maxSpeed = 0,
+    isOn = false,
+    distance = 0,
+  }) {
+    this._speed = speed;
+    this._price = price;
+    this._maxSpeed = maxSpeed;
+    this._isOn = isOn;
+    this._distance = distance;
   }
 
   get price() {
@@ -22,7 +22,11 @@ class Car {
   set price(price) {
     this._price = price;
   }
-
+  static getSpecs(car) {
+    console.log(
+      `maxSpeed: ${car._maxSpeed}, speed: ${car._speed}, isOn: ${car._isOn}, distance: ${car._distance}, price: ${car._price}`,
+    );
+  }
   turnOn() {
     this._isOn = true;
   }
@@ -33,16 +37,14 @@ class Car {
   }
 
   accelerate(value) {
-    let newSpeed = this._speed + value;
-    if (newSpeed <= this._maxSpeed) {
-      this._speed = newSpeed;
+    if (this._speed <= this._maxSpeed) {
+      this._speed += value;
     }
   }
 
   decelerate(value) {
-    let newSpeed = this._speed - value;
-    if (newSpeed > 0) {
-      this._speed = newSpeed;
+    if (this._speed >= value) {
+      this._speed -= value;
     }
   }
 
